@@ -1,0 +1,58 @@
+# Homework Week1
+
+Fantastic unicorns and where to find them.
+
+## Load libs and the csv
+
+```{r}
+library(ggplot2)
+library(readr)
+unicorns <- read_csv("~/inbox/1701 Scripting R course/unicorn_data.csv")
+```
+
+## Plot horn length as a function of weight
+
+Using qplot
+
+```{r}
+qplot(unicorns$weight, unicorns$horn.length, geom="line")
+```
+
+Add some colour:
+
+```{r}
+horn_weight_plot <- ggplot(
+  data=unicorns, aes(x=weight, y=horn.length)
+  ) + geom_line(colour="red", linetype="dashed", size=1.5)
+```
+
+## Model
+
+```{r}
+horn_model <- horn_model <- lm(weight ~ horn.length, data = unicorns)
+```
+
+Average increase in horn length for one unit of mass [L/M]: `r coef(horn_model)[2]`
+
+### Diagnostic plots
+
+```{r}
+qplot(x = fitted(horn_model), y = residuals(horn_model))
+qplot(sample = residuals(horn_model))
+```
+
+### T-test
+
+Start by separating unicorns by colour
+
+```{r}
+pinks <- unicorns[unicorns$colour == 'pink', ]
+greens <- unicorns[unicorns$colour == 'green', ]
+```
+
+Run as Student's test:
+
+```{r}
+t.test(pinks$weight, greens$weight)
+```
+
