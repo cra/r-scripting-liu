@@ -7,7 +7,7 @@ Fantastic unicorns and where to find them.
 ```{r}
 library(ggplot2)
 library(readr)
-unicorns <- read_csv("~/inbox/1701 Scripting R course/unicorn_data.csv")
+unicorns <- read_csv("/tmp/unicorn_data.csv")
 ```
 
 ## Plot horn length as a function of weight
@@ -56,3 +56,29 @@ Run as Student's test:
 t.test(pinks$weight, greens$weight)
 ```
 
+### Plots
+
+Effect of weight and colour on horn length:
+
+```{r}
+qplot(x = weight, colour = colour, y = horn.length, data = unicorns, geom = 'jitter')
+```
+
+```{r}
+qplot(x = weight, colour = diet, y = horn.length, data = unicorns, geom = 'jitter')
+```
+
+
+Same thing with boxplots:
+
+```{r}
+qplot(x = weight, colour = colour, y = horn.length, data = unicorns, geom = 'boxplot')
+```
+
+```{r}
+qplot(x = weight, colour = diet, y = horn.length, data = unicorns, geom = 'boxplot')
+```
+
+## Conclusion
+
+Weight distribution between unicorns of green and pink color is similar, but typically those who eat candy are 20 units heavier, on average, than those who eat flowers. Also, pink unicorns have longer horns than green ones, while diet has no effect on the lengths of their horns.
